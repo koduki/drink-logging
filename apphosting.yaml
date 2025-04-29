@@ -1,0 +1,53 @@
+# apphosting.yaml
+# Firebase App Hosting Backend Configuration
+
+# Specify the runtime environment for your Next.js backend.
+# Choose the Node.js version compatible with your project.
+runtime: nodejs18 # Or nodejs20, etc.
+
+# Define secrets to be securely fetched from Google Cloud Secret Manager.
+# Ensure these secrets exist in Secret Manager in your GCP project
+# and the App Hosting service agent has access permissions.
+secrets:
+  - name: GOOGLE_GENAI_API_KEY          # Name of the secret in Secret Manager
+  - name: NEXT_PUBLIC_FIREBASE_API_KEY # Name of the secret in Secret Manager
+
+# Define environment variables available to the backend server process.
+# These can be direct values or references to secrets defined above.
+env:
+  # --- Secrets from Secret Manager ---
+  # The 'variable' name is how your code will access it (e.g., process.env.GOOGLE_AI_API_KEY)
+  # The 'secret' name refers to the 'name' defined in the 'secrets' section above.
+  - variable: GOOGLE_AI_API_KEY
+    secret: GOOGLE_GENAI_API_KEY
+
+  - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+    secret: NEXT_PUBLIC_FIREBASE_API_KEY
+
+  # --- Non-secret environment variables ---
+  # These are typically safe to include directly, especially NEXT_PUBLIC_* variables
+  # needed by the client-side Firebase SDK (Next.js embeds these during build).
+  # Defining them here also makes them available server-side if needed.
+  - variable: NEXT_PUBLIC_FIREBASE_APP_ID
+    value: "1:141949330353:web:40b4bc9ea77cf530f1d390"
+
+  - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    value: "drink-logging.firebaseapp.com"
+
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    value: "drink-logging"
+
+  - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    value: "drink-logging.appspot.com"
+
+# --- Optional Settings (Uncomment and adjust if needed) ---
+# cpu: 1            # Number of vCPUs (e.g., 1, 2, 4)
+# memoryMiB: 512    # Memory in MiB (e.g., 512, 1024, 2048)
+# concurrency: 80   # Max concurrent requests per instance (default: 80)
+# minInstances: 0   # Minimum number of instances to keep running (default: 0)
+# maxInstances: 100 # Maximum number of instances to scale up to (default: 100)
+
+# --- Optional Network Settings (Uncomment and adjust if needed) ---
+# ingressSettings: ALLOW_ALL # Or ALLOW_INTERNAL_ONLY, ALLOW_INTERNAL_AND_CLOUD_LOAD_BALANCING
+# vpcConnector: projects/YOUR_PROJECT_ID/locations/YOUR_REGION/connectors/YOUR_CONNECTOR_NAME
+# vpcConnectorEgressSettings: PRIVATE_RANGES_ONLY # Or ALL_TRAFFIC

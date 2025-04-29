@@ -2,9 +2,9 @@
 'use client';
 
 import React from 'react';
-import { PolarAngleAxis, PolarGrid, Radar, RadarChart, ResponsiveContainer, Tooltip } from 'recharts';
+import { PolarAngleAxis, PolarGrid, Radar, RadarChart, ResponsiveContainer, Tooltip as RechartsTooltip } from 'recharts'; // Renamed Tooltip to avoid conflict
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { ChartConfig, ChartContainer, ChartTooltipContent } from '@/components/ui/chart'; // Removed ChartTooltip import from here
 import type { ScoreDrinkDetailsOutput } from '@/ai/flows/score-drink-details';
 
 interface RadarChartProps {
@@ -44,7 +44,8 @@ export default function RadarChartComponent({ scoreData, size = 250 }: RadarChar
             margin={{ top: 10, right: 10, bottom: 10, left: 10 }} // Adjusted margins
              outerRadius="80%" // Adjust outer radius if needed
             >
-            <ChartTooltip
+            {/* Use RechartsTooltip and ChartTooltipContent */}
+            <RechartsTooltip
                 cursor={false}
                 content={
                     <ChartTooltipContent
@@ -52,12 +53,16 @@ export default function RadarChartComponent({ scoreData, size = 250 }: RadarChar
                         labelKey="category"
                          // Custom formatter to show score and reason
                          formatter={(value, name, props) => {
-                            const dataPoint = chartData.find(d => d.category === props.payload?.category);
+                             // Ensure props.payload exists and has the category property
+                            const category = props.payload?.category;
+                            if (typeof category !== 'string') return null; // Exit if category is not valid
+
+                            const dataPoint = chartData.find(d => d.category === category);
                              if (!dataPoint) return null;
                             return (
                                 <div className="text-xs p-1 w-40">
                                     <p className="font-semibold">{dataPoint.category}: {value}/5</p>
-                                    <p className="text-muted-foreground mt-1">{dataPoint.reason}</p>
+                                    <p className="text-muted-foreground mt-1 whitespace-normal">{dataPoint.reason}</p>
                                 </div>
                             );
                         }}
@@ -82,20 +87,3 @@ export default function RadarChartComponent({ scoreData, size = 250 }: RadarChar
     </ChartContainer>
   );
 }
-
-// Example of how to integrate into another component:
-/*
-import RadarChartComponent from './radar-chart';
-import { ScoreDrinkDetailsOutput } from '@/ai/flows/score-drink-details';
-
-function MyComponent() {
-  const aiScore: ScoreDrinkDetailsOutput | null = { ... }; // Get AI score data
-
-  return (
-    <div>
-      {aiScore && <RadarChartComponent scoreData={aiScore} />}
-    </div>
-  );
-}
-*/
-

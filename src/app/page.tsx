@@ -1,5 +1,5 @@
 
-import type { Metadata } from "next";
+import type { Metadata } from 'next';
 import { SidebarProvider } from "@/components/ui/sidebar";
 import AppLayout from "@/components/app-layout";
 
@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "Log and rate your favorite drinks.",
 };
 
-export default function Home() {
+export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <SidebarProvider defaultOpen>
         <AppLayout />
