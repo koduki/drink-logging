@@ -3,7 +3,7 @@
 
 # Specify the runtime environment for your Next.js backend.
 # Choose the Node.js version compatible with your project.
-runtime: nodejs18 # Or nodejs20, etc.
+runtime: nodejs20 # Or nodejs20, etc.
 
 # Define secrets to be securely fetched from Google Cloud Secret Manager.
 # Ensure these secrets exist in Secret Manager in your GCP project
