@@ -13,6 +13,7 @@ const LoginScreen = () => {
   //   return <div>Error: Firebase not initialized.</div>;
   // }
   const auth = getAuth(app);
+  const provider = new GoogleAuthProvider(); // Moved provider initialization here
 
   const handleGoogleLogin = async () => {
     setError(null);
@@ -33,8 +34,6 @@ const LoginScreen = () => {
       console.error('Login failed:', err);
     }
   };
-
-  const provider = new GoogleAuthProvider();
 
   return (
     <div style={{ backgroundColor: '#F5F5DC', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
@@ -74,3 +73,4 @@ const LoginScreen = () => {
 };
 
 export default LoginScreen;
+
