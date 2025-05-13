@@ -16,23 +16,23 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import RadarChartComponent from './radar-chart';
-import { getDrinks, deleteDrink, updateDrink, addDrink } from '@/services/drinks'; // Import Firestore services
-import type { DrinkLog, NewDrinkLogData } from '@/types/drink'; // Import shared types
+import { getDrinks, deleteDrink, updateDrink } from '@/services/drinks'; // Import Firestore services
+import type { DrinkLog } from '@/types/drink'; // Import shared types
 import { useToast } from "@/hooks/use-toast";
 import { formatDistanceToNow } from 'date-fns'; // For relative time
-import type { QueryDocumentSnapshot } from 'firebase/firestore'; // Correct import for pagination
+import type { QueryDocumentSnapshot, Timestamp } from 'firebase/firestore'; // Correct import for pagination
 import { useForm } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
 import AddDrinkForm from './add-drink-form'; // Import AddDrinkForm for the modal content
 
 // Function to safely convert Firestore Timestamp to Date for display
-const timestampToDate = (timestamp: any): Date => {
-  if (timestamp && typeof timestamp.toDate === 'function') {
-    return timestamp.toDate();
+const timestampToDate = (timestamp: Timestamp | Date): Date => {
+  if (timestamp && typeof (timestamp as Timestamp).toDate === 'function') {
+    return (timestamp as Timestamp).toDate();
   }
   // Fallback for potential data inconsistencies or if timestamp is already a Date (unlikely from Firestore)
   if (timestamp instanceof Date) {
@@ -140,7 +140,7 @@ export default function DrinkList() {
       setLastVisible(null);
       setHasMore(true);
       fetchDrinksData(false); // Fetch initial data for the new settings
-  }, [sortBy, filterType]); // Remove fetchDrinksData from here to avoid loop
+  }, [sortBy, filterType, fetchDrinksData]); // Include fetchDrinksData in dependencies
 
 
   const handleDrinkAdded = () => {
@@ -374,7 +374,7 @@ export default function DrinkList() {
                   ))}
                   <span className="ml-2 text-sm text-muted-foreground">({drink.rating}/5)</span>
                 </div>
-                {drink.comments && <p className="text-sm text-muted-foreground italic line-clamp-3">"{drink.comments}"</p>}
+                {drink.comments && <p className="text-sm text-muted-foreground italic line-clamp-3">&ldquo;{drink.comments}&rdquo;</p>}
 
                 {drink.aiScore && (
                   <div className="mt-4 pt-4 border-t border-border">
@@ -436,8 +436,8 @@ export default function DrinkList() {
         <div className="text-center text-muted-foreground py-10">
           <p>No matching drinks found.</p>
           {searchTerm && <p>Try adjusting your search or filters.</p>}
-          {!searchTerm && filterType !== 'all' && <p>Try selecting 'All Types'.</p>}
-          {!searchTerm && filterType === 'all' && <p>Add your first drink log using the 'Add Drink' button!</p>}
+          {!searchTerm && filterType !== 'all' && <p>Try selecting &apos;All Types&apos;.</p>}
+          {!searchTerm && filterType === 'all' && <p>Add your first drink log using the &apos;Add Drink&apos; button!</p>}
         </div>
       )}
 

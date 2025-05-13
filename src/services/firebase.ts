@@ -25,7 +25,7 @@ if (typeof window !== 'undefined') {
 // --- Debug code END ---
 
 // Initialize Firebase
-let app: FirebaseApp;
+let app: FirebaseApp | undefined;
 // Ensure all necessary config values are present before initializing
 if (firebaseConfig.apiKey && firebaseConfig.projectId && firebaseConfig.appId) {
     if (!getApps().length) {
@@ -42,16 +42,13 @@ if (firebaseConfig.apiKey && firebaseConfig.projectId && firebaseConfig.appId) {
 
 // Initialize Firestore only if app was initialized
 let db: Firestore | undefined = undefined;
-if (app!) { 
+if (app) { 
     db = getFirestore(app);
     // console.log("Firestore initialized successfully");
 }
 
 // Initialize Storage only if app was initialized
-let storage: any | undefined = undefined; 
-if (app!) {
-    storage = getStorage(app);
-    // console.log("Firebase Storage initialized successfully");
-}
+const storage = app ? getStorage(app) : undefined;
+// console.log("Firebase Storage initialized successfully");
 
 export { app, db, storage };

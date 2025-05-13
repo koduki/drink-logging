@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { app } from '../services/firebase'; // Assuming your firebase app instance is exported from here
+import Image from 'next/image';
 
 const LoginScreen = () => {
   const [error, setError] = useState<string | null>(null);
@@ -29,8 +30,9 @@ const LoginScreen = () => {
       console.log('Login successful!');
       // For example, redirect to a dashboard:
       // window.location.href = '/dashboard';
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Login failed';
+      setError(errorMessage);
       console.error('Login failed:', err);
     }
   };
@@ -59,7 +61,7 @@ const LoginScreen = () => {
  gap: '8px',
             }}
           >
- <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo" style={{ width: '20px', height: '20px' }} />
+ <Image src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo" width={20} height={20} />
             Sign in with Google
           </button>
         </div>

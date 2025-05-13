@@ -14,7 +14,6 @@ import {
   SidebarProvider, // Removed duplicate import
   SidebarTrigger,
 } from '@/components/ui/sidebar';
-import { Button } from '@/components/ui/button';
 import {
   List,
   PlusCircle,

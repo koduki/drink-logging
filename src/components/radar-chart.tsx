@@ -3,7 +3,6 @@
 
 import React from 'react';
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart, ResponsiveContainer, Tooltip as RechartsTooltip } from 'recharts'; // Renamed Tooltip to avoid conflict
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartConfig, ChartContainer, ChartTooltipContent } from '@/components/ui/chart'; // Removed ChartTooltip import from here
 import type { ScoreDrinkDetailsOutput } from '@/ai/flows/score-drink-details';
 
