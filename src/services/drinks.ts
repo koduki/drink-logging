@@ -14,7 +14,6 @@ import {
   QueryConstraint,
   limit,
   startAfter,
-  DocumentSnapshot,
   QueryDocumentSnapshot, // Import QueryDocumentSnapshot
 } from 'firebase/firestore';
 import type { DrinkLog, NewDrinkLogData, DrinkLogDocumentData } from '@/types/drink';

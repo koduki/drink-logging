@@ -333,7 +333,7 @@ Comments: ${watchedComments || 'N/A'}`,
                 </div>
               )}
             </div>
-             {errors.photoFile && <p className="text-destructive text-sm mt-1">{(errors.photoFile as any).message}</p>} {/* Added type assertion */} 
+             {errors.photoFile && <p className="text-destructive text-sm mt-1">{errors.photoFile.message?.toString()}</p>}
           </div>
 
           {/* Location */}

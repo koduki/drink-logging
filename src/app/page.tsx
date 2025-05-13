@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "Log and rate your favorite drinks.",
 };
 
-export default function RootLayout({children}: {children: React.ReactNode}) {
+export default function RootLayout({}: {children: React.ReactNode}) {
   return (
     <SidebarProvider defaultOpen>
         <AppLayout />
